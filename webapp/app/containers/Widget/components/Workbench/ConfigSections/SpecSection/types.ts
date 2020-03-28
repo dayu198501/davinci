@@ -12,6 +12,7 @@ export interface ISpecConfig {
   shape?: 'polygon' | 'circle'
   roam?: boolean
   layerType?: string
+  mapinfo?: string
   linesSpeed: number
   symbolType: string
   layout?: 'horizontal' | 'vertical'

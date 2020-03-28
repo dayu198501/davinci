@@ -148,6 +148,16 @@ export const CHART_LAYER_TYPES = [
   { name: '飞行图', value: 'lines' }
 ]
 
+export const CHART_MAPINFO = [
+    { name: '中国', value: '0' },
+    { name: '北京', value: '11' },
+    { name: '山东', value: '37' },
+    { name: '济南', value: '3701' },
+    { name: '历下区', value: '370102' },
+    { name: '河北', value: '42' },
+    { name: '河南', value: '41' }
+]
+
 export const CHART_LINES_SYMBOL_TYPE = [
   {name: '圆形', value: 'circle'},
   {name: '矩形', value: 'rect'},
