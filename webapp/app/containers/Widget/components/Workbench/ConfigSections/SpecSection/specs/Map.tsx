@@ -16,7 +16,7 @@ interface ISpecSectionMapProps {
 
 function SpecSectionMap (props: ISpecSectionMapProps) {
   const { spec, isLegendSection, title, onChange } = props
-  const { roam, layerType, linesSpeed, symbolType, mapinfo } = spec
+  const { roam, layerType, linesSpeed, symbolType, mapinfo, is3D } = spec
 
   return (
     <div className={styles.paneBlock}>
@@ -26,6 +26,11 @@ function SpecSectionMap (props: ISpecSectionMapProps) {
           <Col span={10}>
             <Checkbox checked={roam} onChange={onSectionChange(onChange, 'roam')}>
               移动&缩放
+            </Checkbox>
+          </Col>
+          <Col span={10}>
+            <Checkbox checked={is3D} onChange={onSectionChange(onChange, 'is3D')}>
+              开启3D
             </Checkbox>
           </Col>
           {/* <Col span={4}>类型</Col>
@@ -39,6 +44,8 @@ function SpecSectionMap (props: ISpecSectionMapProps) {
               {chartLayerTypeOptions}
             </Select>
           </Col> */}
+        </Row>
+        <Row>
           <Col span={4}>地图</Col>
           <Col span={10}>
             <Select

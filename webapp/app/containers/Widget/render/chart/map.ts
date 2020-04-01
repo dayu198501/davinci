@@ -55,7 +55,8 @@ export default function (chartProps: IChartProps, drillOptions?: any) {
   const {
     layerType,
     mapinfo,
-    roam
+    roam,
+    is3D
   } = spec
 
   const { instance } = drillOptions
@@ -128,19 +129,53 @@ export default function (chartProps: IChartProps, drillOptions?: any) {
     echarts.registerMap('test', require('../../../../assets/json/map/0.json'))
   }
 
-  const serieObj = {
-    name: '地图',
-    type: 'map',
-    mapType: 'test',
-    roam,
-    data: Object.keys(dataTree).map((key, index) => {
-        const value = dataTree[key]
-        return {
-        name: key,
-        value
-        }
-    }),
-    ...labelOption
+  let serieObj
+  if (is3D) {
+    serieObj = {
+        map: 'test',
+        type: 'map3D',
+        roam,
+        light: {
+            main: {
+                intensity: 1,
+                shadow: true,
+                alpha: 150,
+                beta: 70
+            },
+            ambient: {
+                intensity: 0
+            }
+        },
+        itemStyle: {
+            areaColor: 'red',
+            opacity: 1,
+            borderWidth: 0.8,
+            borderColor: 'rgb(62,215,213)'
+        },
+        data: Object.keys(dataTree).map((key, index) => {
+            const value = dataTree[key]
+            return {
+            name: key,
+            value
+            }
+        }),
+        ...labelOption
+    }
+  } else {
+    serieObj = {
+        name: 'china',
+        type: 'map',
+        mapType: 'test',
+        roam,
+        data: Object.keys(dataTree).map((key, index) => {
+            const value = dataTree[key]
+            return {
+            name: key,
+            value
+            }
+        }),
+        ...labelOption
+      }
   }
 
   metricArr.push(serieObj)
@@ -208,14 +243,17 @@ export default function (chartProps: IChartProps, drillOptions?: any) {
     ...visualMapOptions,
     tooltip
   }
-
-  instance.off('click')
-  instance.on('click', (params) => {
-    mapClick(params, mapOptions, instance)
-  })
-  instance.on('contextmenu', (params) => {
-    mapReturn(params, mapOptions, instance)
-  })
+  if (is3D) {
+    instance.off('click')
+  } else {
+    instance.off('click')
+    instance.on('click', (params) => {
+        mapClick(params, mapOptions, instance)
+    })
+    instance.on('contextmenu', (params) => {
+        mapReturn(params, mapOptions, instance)
+    })
+  }
 
   return mapOptions
 }
@@ -262,7 +300,6 @@ function mapClick (params, mapOptions, instance) {
 function mapReturn (params, mapOptions, instance) {
     const area = geoData.find((d) => d.name.includes(params.name))
     const parent = geoData.find((g) => g.id === area.parent)
-    console.log(area)
     if (area) {
         echarts.registerMap('test', require('../../../../assets/json/map/' + parent.parent + '.json'))
         instance.setOption(mapOptions)

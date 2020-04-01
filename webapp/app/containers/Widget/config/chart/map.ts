@@ -68,6 +68,7 @@ const map: IChartInfo = {
       layerType: 'map',
       mapinfo: '0',
       roam: false,
+      is3D: false,
       symbolType: CHART_LINES_SYMBOL_TYPE[0].value,
       linesSpeed: '10'
     }

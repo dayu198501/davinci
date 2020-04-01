@@ -11,6 +11,7 @@ export interface ISpecConfig {
   gapNumber?: number
   shape?: 'polygon' | 'circle'
   roam?: boolean
+  is3D?: boolean
   layerType?: string
   mapinfo?: string
   linesSpeed: number
