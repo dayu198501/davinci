@@ -143,7 +143,9 @@ export enum ViewModelVisualTypes {
   GeoProvince = 'geoProvince',
   GeoCity = 'geoCity',
   GeoArea = 'GeoArea',
-  GeoStreet = 'GeoStreet'
+  GeoStreet = 'GeoStreet',
+  Longitude = 'longitude',
+  Dimension = 'dimension'
 }
 
 export const VisualTypeSqlTypeSetting = {
@@ -162,7 +164,9 @@ export const ViewModelVisualTypesLocale = {
   [ViewModelVisualTypes.GeoProvince]: '地理省份',
   [ViewModelVisualTypes.GeoCity]: '地理城市',
   [ViewModelVisualTypes.GeoArea]: '地理区县',
-  [ViewModelVisualTypes.GeoStreet]: '地理街道'
+  [ViewModelVisualTypes.GeoStreet]: '地理街道',
+  [ViewModelVisualTypes.Longitude]: '经度',
+  [ViewModelVisualTypes.Dimension]: '纬度'
 }
 
 export const DEFAULT_SQL_LIMIT = 500

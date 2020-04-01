@@ -3,9 +3,11 @@ import { IChartProps } from './index'
 import chartlibs from '../../config/chart'
 import * as echarts from 'echarts/lib/echarts'
 import { ECharts } from 'echarts'
+import 'echarts/extension/bmap/bmap'
 import chartOptionGenerator from '../../render/chart'
 import { getTriggeringRecord } from '../util'
 import geoData from 'assets/js/geo.js'
+import 'echarts-gl/dist/echarts-gl'
 const styles = require('./Chart.less')
 
 
@@ -39,7 +41,10 @@ export class Chart extends React.PureComponent<IChartProps> {
         this.instance = echarts.init(this.container, 'default')
       }
       if (renderType === 'clear') {
-        this.instance.clear()
+        // this.instance.clear()
+        // 解决百度地图切换问题
+        this.instance.dispose()
+        this.instance = echarts.init(this.container, 'default')
       }
     }
 
