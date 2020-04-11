@@ -135,6 +135,7 @@ export default function (chartProps: IChartProps, drillOptions?: any) {
         map: 'test',
         type: 'map3D',
         roam,
+        // geoIndex: 0,
         light: {
             main: {
                 intensity: 1,
@@ -167,6 +168,13 @@ export default function (chartProps: IChartProps, drillOptions?: any) {
         type: 'map',
         mapType: 'test',
         roam,
+        // geoIndex: 0,
+        itemStyle: {
+            areaColor: 'red',
+            opacity: 1,
+            borderWidth: 0.8,
+            borderColor: 'rgb(62,215,213)'
+        },
         data: Object.keys(dataTree).map((key, index) => {
             const value = dataTree[key]
             return {

@@ -22,19 +22,13 @@ package edp.davinci.dto.projectDto;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Data;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 @Data
-@NotNull(message = "project cannot be null")
-public class ProjectUpdate {
+public class ProjectInfoShare {
 
-    @NotBlank(message = "project name cannot be EMPTY")
     private String name;
 
     private String description;
 
-    private Boolean visibility = true;
-
     private JSONObject config;
+
 }

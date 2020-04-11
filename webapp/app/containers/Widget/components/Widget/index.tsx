@@ -29,9 +29,18 @@ import { IRichTextConfig, IBarConfig, IRadarConfig } from '../Workbench/ConfigSe
 import { IDoubleYAxisConfig } from '../Workbench/ConfigSections/DoubleYAxisSection'
 import { IViewModel } from 'containers/View/types'
 import { IQueryVariableMap } from 'containers/Dashboard/types'
+import Watermark from 'components/Watermark'
 import { getStyleConfig } from '../util'
 import ChartTypes from '../../config/chart/ChartTypes'
+import { createStructuredSelector } from 'reselect'
+import { makeSelectCurrentProject } from 'containers/Projects/selectors'
+import { connect } from 'react-redux'
+import { IProject } from 'containers/Projects/types'
 const styles = require('../Pivot/Pivot.less')
+
+const mapStateToProps = createStructuredSelector({
+    currentProject: makeSelectCurrentProject()
+})
 
 export type DimetionType = 'row' | 'col'
 export type RenderType =
@@ -171,6 +180,7 @@ export interface IWidgetConfig extends IWidgetProps {
 export interface IWidgetWrapperProps extends IWidgetProps {
   loading?: boolean | JSX.Element
   empty?: boolean | JSX.Element
+  currentProject?: IProject
 }
 
 export interface IWidgetWrapperStates {
@@ -223,10 +233,16 @@ export class Widget extends React.Component<
   }
 
   public render () {
-    const { loading, empty } = this.props
+    const { loading, empty, currentProject } = this.props
     const { width, height } = this.state
 
     const widgetProps = { width, height, ...this.props }
+
+    const watermarkTextArray = []
+    const isProject = currentProject ? currentProject.config.watermark.isProject : false
+    if (isProject) {
+      watermarkTextArray.push(currentProject.name)
+    }
 
     delete widgetProps.loading
 
@@ -242,7 +258,21 @@ export class Widget extends React.Component<
     }
 
     return (
-      <div className={styles.wrapper} ref={this.container}>
+      <div className={`Watermark-target ${styles.wrapper}`} ref={this.container}>
+        {
+            currentProject ? (
+                <Watermark
+                    selector={'.Watermark-target'}
+                    color={currentProject.config.watermark.color}
+                    textArray={watermarkTextArray}
+                    dateFormat={currentProject.config.watermark.dateFormat}
+                    isProject={currentProject.config.watermark.isProject}
+                    isUsername={currentProject.config.watermark.isUsername}
+                    content={currentProject.config.watermark.content}
+                    enable={currentProject.config.watermark.enable}
+                />
+            ) : null
+        }
         {widgetContent}
         {loading}
         {empty}
@@ -251,4 +281,4 @@ export class Widget extends React.Component<
   }
 }
 
-export default Widget
+export default connect(mapStateToProps, null)(Widget)

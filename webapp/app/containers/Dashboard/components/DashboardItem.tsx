@@ -43,6 +43,7 @@ import { IProject } from 'containers/Projects/types'
 import { IQueryConditions, IQueryVariableMap, SharePanelType } from '../types'
 import { IMapControlOptions, OnGetControlOptions, IDistinctValueReqeustParams, IFilters } from 'app/components/Filters/types'
 import { ICurrentDataInFullScreenProps } from './fullScreenPanel/FullScreenPanel'
+import Watermark from 'components/Watermark'
 const styles = require('../Dashboard.less')
 const utilStyles = require('assets/less/util.less')
 
@@ -70,6 +71,7 @@ interface IDashboardItemProps {
   controlSelectOptions: IMapControlOptions
   selectedItems: number[]
   currentProject?: IProject
+  projectInfoShare?: IProject
   queryConditions: IQueryConditions
   container?: string
   errorMessage: string
@@ -680,6 +682,7 @@ export class DashboardItem extends React.PureComponent<IDashboardItemProps, IDas
       renderType,
       controlSelectOptions,
       currentProject,
+      projectInfoShare,
       onShowEdit,
       onShowDrillEdit,
       onSelectDrillHistory,
@@ -900,6 +903,7 @@ export class DashboardItem extends React.PureComponent<IDashboardItemProps, IDas
 
     const { selectedChart, cols, rows, metrics } = widgetProps
     const hasDataConfig = !!(cols.length || rows.length || metrics.length)
+
     const empty = (
       <DashboardItemMask.Empty
         loading={loading}
@@ -909,9 +913,16 @@ export class DashboardItem extends React.PureComponent<IDashboardItemProps, IDas
       />
     )
 
+    const watermarkTextArray = []
+    const isProject = currentProject ? currentProject.config.watermark.isProject : projectInfoShare.config.watermark.isProject
+    if (isProject) {
+      watermarkTextArray.push(currentProject ? currentProject.name : projectInfoShare.name)
+    }
+
 
     return (
-      <div className={gridItemClass} ref={(f) => this.container = f}>
+    // <div className={`Watermark-target ${gridItemClass}`} ref={(f) => this.container = f} ></div>
+      <div className={gridItemClass} ref={(f) => this.container = f} >
         <div className={styles.header}>
           <div className={styles.title}>
             {controlToggle}
@@ -991,6 +1002,16 @@ export class DashboardItem extends React.PureComponent<IDashboardItemProps, IDas
             {dataDrillHistory}
           </div>
         </Dropdown>
+        {/* <Watermark
+            selector={'.Watermark-target'}
+            color={currentProject ? currentProject.config.watermark.color : projectInfoShare.config.watermark.color}
+            textArray={watermarkTextArray}
+            dateFormat={currentProject ? currentProject.config.watermark.dateFormat : projectInfoShare.config.watermark.dateFormat}
+            isProject={currentProject ? currentProject.config.watermark.isProject : projectInfoShare.config.watermark.isProject}
+            isUsername={currentProject ? currentProject.config.watermark.isUsername : projectInfoShare.config.watermark.isUsername}
+            content={currentProject ? currentProject.config.watermark.content : projectInfoShare.config.watermark.content}
+            enable={currentProject ? currentProject.config.watermark.enable : projectInfoShare.config.watermark.enable}
+        /> */}
       </div>
     )
   }
