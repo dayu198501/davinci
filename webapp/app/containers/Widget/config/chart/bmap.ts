@@ -11,13 +11,14 @@ const defaultTheme = require('assets/json/echartsThemes/default.project.json')
 const defaultThemeColors = defaultTheme.theme.color
 
 import { IChartInfo } from 'containers/Widget/components/Widget'
-const map: IChartInfo = {
-  id: ChartTypes.CMap,
-  name: 'map',
-  title: '地图',
-  icon: 'icon-china',
+
+const bmap: IChartInfo = {
+  id: ChartTypes.BMap,
+  name: 'bmap',
+  title: '百度地图',
+  icon: 'icon-baidu',
   coordinate: 'cartesian',
-  rules: [{ dimension: [0, 9999], metric: 1 }],
+  rules: [{ dimension: 3, metric: 1 }],
   dimetionAxis: 'col',
   data: {
     cols: {
@@ -66,13 +67,16 @@ const map: IChartInfo = {
     },
     spec: {
       layerType: 'map',
-      mapinfo: '0',
-      roam: false,
-      is3D: false,
-      symbolType: CHART_LINES_SYMBOL_TYPE[0].value,
-      linesSpeed: '10'
+      effectType: 'scatter',
+      bubbleType: 'system',
+      bubbleValue: 8,
+      themeType: 'simpleWind',
+      lonValue: 116.3956,
+      latValue: 39.9299,
+      zoomValue: 5,
+      symbolType: CHART_LINES_SYMBOL_TYPE[0].value
     }
   }
 }
 
-export default map
+export default bmap
