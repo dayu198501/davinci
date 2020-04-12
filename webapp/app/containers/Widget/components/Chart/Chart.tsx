@@ -3,14 +3,18 @@ import { IChartProps } from './index'
 import chartlibs from '../../config/chart'
 import * as echarts from 'echarts/lib/echarts'
 import { ECharts } from 'echarts'
+import 'echarts/extension/bmap/bmap'
 import chartOptionGenerator from '../../render/chart'
 import { getTriggeringRecord } from '../util'
+import geoData from 'assets/js/geo.js'
+import 'echarts-gl/dist/echarts-gl'
 const styles = require('./Chart.less')
 
 
 export class Chart extends React.PureComponent<IChartProps> {
   private container: HTMLDivElement = null
   private instance: ECharts
+  private timerProvinceClick = null
   constructor (props) {
     super(props)
   }
@@ -30,13 +34,17 @@ export class Chart extends React.PureComponent<IChartProps> {
     }
     if (!this.instance) {
       this.instance = echarts.init(this.container, 'default')
+      echarts.registerMap('test', require('../../../../assets/json/map/0.json'))
     } else {
       if (renderType === 'rerender') {
         this.instance.dispose()
         this.instance = echarts.init(this.container, 'default')
       }
       if (renderType === 'clear') {
-        this.instance.clear()
+        // this.instance.clear()
+        // 解决百度地图切换问题
+        this.instance.dispose()
+        this.instance = echarts.init(this.container, 'default')
       }
     }
 
@@ -53,7 +61,14 @@ export class Chart extends React.PureComponent<IChartProps> {
       )
     )
 
-
+    if (selectedChart === 7) {
+      this.container.oncontextmenu = () => {
+        return false
+      } // 屏蔽右键默认事件
+      // this.instance.on('contextmenu', (params) => {
+      //     this.mapReturn(params)
+      // })
+    }
     // if (onDoInteract) {
     //   this.instance.off('click')
     //   this.instance.on('click', (params) => {
@@ -65,10 +80,10 @@ export class Chart extends React.PureComponent<IChartProps> {
     //   })
     // }
 
-    this.instance.off('click')
-    this.instance.on('click', (params) => {
-      this.collectSelectedItems(params)
-    })
+    //this.instance.off('click')
+    //this.instance.on('click', (params) => {
+     // this.collectSelectedItems(params)
+    //})
     this.instance.resize()
   }
 
