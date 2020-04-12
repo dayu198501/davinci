@@ -44,7 +44,7 @@ import { getFormattedValue } from '../../components/Config/Format'
 const provinceSuffix = ['省', '自治区', '市']
 const citySuffix = ['自治州', '市', '区', '县', '旗', '盟', '镇']
 
-export default function (chartProps: IChartProps) {
+export default function (chartProps: IChartProps, drillOptions?: any) {
   const {
     chartStyles,
     data,

@@ -47,7 +47,7 @@ export default function (type, chartProps: IChartProps, drillOptions?: any): ECh
     case 'radar': return radar(chartProps)
     case 'sankey': return sankey(chartProps)
     case 'parallel': return parallel(chartProps)
-    case 'map': return map(chartProps)
+    case 'map': return map(chartProps, drillOptions)
     case 'bmap': return bmap(chartProps)
     case 'wordCloud': return wordCloud(chartProps)
     case 'waterfall': return waterfall(chartProps)
