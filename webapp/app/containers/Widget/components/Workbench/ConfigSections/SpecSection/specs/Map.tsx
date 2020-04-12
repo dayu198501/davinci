@@ -33,7 +33,7 @@ function SpecSectionMap (props: ISpecSectionMapProps) {
               开启3D
             </Checkbox>
           </Col>
-          {/* <Col span={4}>类型</Col>
+          <Col span={4}>类型</Col>
           <Col span={10}>
             <Select
               placeholder="类型"
@@ -43,7 +43,7 @@ function SpecSectionMap (props: ISpecSectionMapProps) {
             >
               {chartLayerTypeOptions}
             </Select>
-          </Col> */}
+          </Col>
         </Row>
         <Row>
           <Col span={4}>地图</Col>
