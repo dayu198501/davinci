@@ -62,65 +62,31 @@ export class Chart extends React.PureComponent<IChartProps> {
     )
 
     if (selectedChart === 7) {
-        this.container.oncontextmenu = () => {
-            return false
-        } // 屏蔽右键默认事件
-        // this.instance.on('contextmenu', (params) => {
-        //     this.mapReturn(params)
-        // })
+      this.container.oncontextmenu = () => {
+        return false
+      } // 屏蔽右键默认事件
+      // this.instance.on('contextmenu', (params) => {
+      //     this.mapReturn(params)
+      // })
     }
-    // this.instance.off('click')
-    // this.instance.on('click', (params) => {
-    //   if (selectedChart === 7) {
-    //     this.mapClick(params)
-    //   }
-    //   this.collectSelectedItems(params)
-    // })
+    // if (onDoInteract) {
+    //   this.instance.off('click')
+    //   this.instance.on('click', (params) => {
+    //     const isInteractiveChart = onCheckTableInteract()
+    //     if (isInteractiveChart) {
+    //       const triggerData = getTriggeringRecord(params, seriesData)
+    //       onDoInteract(triggerData)
+    //     }
+    //   })
+    // }
+
+    //this.instance.off('click')
+    //this.instance.on('click', (params) => {
+     // this.collectSelectedItems(params)
+    //})
     this.instance.resize()
   }
 
-//   public mapClick = (params) => {
-//     const { selectedChart, getDataDrillDetail, isDrilling } = this.props
-//     const area = geoData.find((d) => d.name.includes(params.name))
-//     if (area) {
-//         echarts.registerMap('test', require('../../../../assets/json/map/' + area.id + '.json'))
-//         // this.instance.clear()
-//         this.instance.setOption(
-//             chartOptionGenerator(
-//             chartlibs.find((cl) => cl.id === selectedChart).name,
-//             this.props,
-//             {
-//                 instance: this.instance,
-//                 isDrilling,
-//                 getDataDrillDetail,
-//                 selectedItems: this.props.selectedItems
-//             }
-//             )
-//         )
-//     }
-//   }
-//   public mapReturn = (params) => {
-//     const { selectedChart, getDataDrillDetail, isDrilling } = this.props
-//     const area = geoData.find((d) => d.name.includes(params.name))
-//     const parent = geoData.find((g) => g.id === area.parent)
-//     // console.log(area)
-//     if (area) {
-//         echarts.registerMap('test', require('../../../../assets/json/map/' + parent.parent + '.json'))
-//         this.instance.clear()
-//         this.instance.setOption(
-//             chartOptionGenerator(
-//             chartlibs.find((cl) => cl.id === selectedChart).name,
-//             this.props,
-//             {
-//                 instance: this.instance,
-//                 isDrilling,
-//                 getDataDrillDetail,
-//                 selectedItems: this.props.selectedItems
-//             }
-//             )
-//         )
-//     }
-//   }
   public collectSelectedItems = (params) => {
     const { data, onSelectChartsItems, selectedChart, onDoInteract, onCheckTableInteract } = this.props
     let selectedItems = []
