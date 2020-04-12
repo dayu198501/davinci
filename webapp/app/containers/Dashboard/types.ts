@@ -99,6 +99,7 @@ export interface IDataRequestParams {
   expired: number
   flush: boolean
   pagination?: {
+    
     pageNo: number
     pageSize: number
   }
