@@ -192,6 +192,12 @@ export default function (chartProps: IChartProps, drillOptions?: any) {
     blurSize: 40
   }
 
+  if (mapinfo != null && mapinfo !== '') {
+    echarts.registerMap('test', require('../../../../assets/json/map/' + mapinfo + '.json'))
+  } else {
+    echarts.registerMap('test', require('../../../../assets/json/map/0.json'))
+  }
+
   let serieObj
   switch (layerType) {
     case 'map':
@@ -545,4 +551,21 @@ function getPosition (position) {
       break
   }
   return positionValue
+}
+
+function mapClick (params, mapOptions, instance) {
+    const area = geoData.find((d) => d.name.includes(params.name))
+    if (area) {
+        echarts.registerMap('test', require('../../../../assets/json/map/' + area.id + '.json'))
+        instance.setOption(mapOptions)
+    }
+}
+
+function mapReturn (params, mapOptions, instance) {
+    const area = geoData.find((d) => d.name.includes(params.name))
+    const parent = geoData.find((g) => g.id === area.parent)
+    if (area) {
+        echarts.registerMap('test', require('../../../../assets/json/map/' + parent.parent + '.json'))
+        instance.setOption(mapOptions)
+    }
 }
