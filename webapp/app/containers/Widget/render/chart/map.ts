@@ -18,8 +18,8 @@
  * >>
  */
 
-import { IChartProps } from '../../components/Chart'
-import { EChartOption } from 'echarts'
+import {IChartProps} from '../../components/Chart'
+import {EChartOption} from 'echarts'
 import {
   decodeMetricName,
   getChartTooltipLabel,
@@ -39,7 +39,7 @@ import {
   DEFAULT_ECHARTS_THEME
 } from 'app/globalConstants'
 import geoData from 'assets/js/geo.js'
-import { getFormattedValue } from '../../components/Config/Format'
+import {getFormattedValue} from '../../components/Config/Format'
 
 const provinceSuffix = ['省', '自治区', '市']
 const citySuffix = ['自治州', '市', '区', '县', '旗', '盟', '镇']
@@ -76,7 +76,7 @@ export default function (chartProps: IChartProps, drillOptions?: any) {
   const tooltip: EChartOption.Tooltip = {
     trigger: 'item',
     formatter: (params: EChartOption.Tooltip.Format) => {
-      const { name, data, color } = params
+      const {name, data, color} = params
       const tooltipLabels = []
       if (color) {
         tooltipLabels.push(`<span class="widget-tooltip-circle" style="background: ${color}"></span>`)
@@ -126,7 +126,7 @@ export default function (chartProps: IChartProps, drillOptions?: any) {
     max = Math.max(max, value)
 
     cols.forEach((col) => {
-      const { visualType } = model[col.name]
+      const {visualType} = model[col.name]
       if (visualType === 'geoProvince') {
         areaVal = record[col.name]
         const area = getProvinceArea(areaVal)
@@ -207,7 +207,7 @@ export default function (chartProps: IChartProps, drillOptions?: any) {
         mapType: 'china',
         roam,
         data: Object.keys(dataTree).map((key, index) => {
-          const { lon, lat, value } = dataTree[key]
+          const {lon, lat, value} = dataTree[key]
           return {
             name: key,
             value: [lon, lat, value]
@@ -222,7 +222,7 @@ export default function (chartProps: IChartProps, drillOptions?: any) {
         type: 'scatter',
         coordinateSystem: 'geo',
         data: Object.keys(dataTree).map((key, index) => {
-          const { lon, lat, value } = dataTree[key]
+          const {lon, lat, value} = dataTree[key]
           return {
             name: key,
             value: [lon, lat, value],
@@ -239,7 +239,7 @@ export default function (chartProps: IChartProps, drillOptions?: any) {
         type: 'heatmap',
         coordinateSystem: 'geo',
         data: Object.keys(dataTree).map((key, index) => {
-          const { lon, lat, value } = dataTree[key]
+          const {lon, lat, value} = dataTree[key]
           return {
             name: key,
             value: [lon, lat, value],
@@ -365,11 +365,11 @@ export default function (chartProps: IChartProps, drillOptions?: any) {
       coordinateSystem: 'geo',
       zlevel: index,
       rippleEffect: {
-          brushType: 'stroke'
+        brushType: 'stroke'
       },
       ...labelOptionLines,
       symbolSize: (val) => {
-          return 12
+        return 12
       },
       data: scatterData
     }
@@ -381,19 +381,19 @@ export default function (chartProps: IChartProps, drillOptions?: any) {
       symbol: ['none', 'arrow'],
       symbolSize: 10,
       effect: {
-          show: true,
-          // period: 600,
-          trailLength: 0,
-          symbol: symbolType,
-          symbolSize: 15,
-          constantSpeed: linesSpeed
+        show: true,
+        // period: 600,
+        trailLength: 0,
+        symbol: symbolType,
+        symbolSize: 15,
+        constantSpeed: linesSpeed
       },
       lineStyle: {
-          normal: {
-              width: 2,
-              opacity: 0.6,
-              curveness: 0.2
-          }
+        normal: {
+          width: 2,
+          opacity: 0.6,
+          curveness: 0.2
+        }
       },
       data: linesSeriesData
     }
@@ -474,7 +474,7 @@ export default function (chartProps: IChartProps, drillOptions?: any) {
           },
           label: {
             emphasis: {
-                show: true
+              show: true
             }
           },
           roam
@@ -554,18 +554,18 @@ function getPosition (position) {
 }
 
 function mapClick (params, mapOptions, instance) {
-    const area = geoData.find((d) => d.name.includes(params.name))
-    if (area) {
-        echarts.registerMap('test', require('../../../../assets/json/map/' + area.id + '.json'))
-        instance.setOption(mapOptions)
-    }
+  const area = geoData.find((d) => d.name.includes(params.name))
+  if (area) {
+    echarts.registerMap('test', require('../../../../assets/json/map/' + area.id + '.json'))
+    instance.setOption(mapOptions)
+  }
 }
 
 function mapReturn (params, mapOptions, instance) {
-    const area = geoData.find((d) => d.name.includes(params.name))
-    const parent = geoData.find((g) => g.id === area.parent)
-    if (area) {
-        echarts.registerMap('test', require('../../../../assets/json/map/' + parent.parent + '.json'))
-        instance.setOption(mapOptions)
-    }
+  const area = geoData.find((d) => d.name.includes(params.name))
+  const parent = geoData.find((g) => g.id === area.parent)
+  if (area) {
+    echarts.registerMap('test', require('../../../../assets/json/map/' + parent.parent + '.json'))
+    instance.setOption(mapOptions)
+  }
 }
